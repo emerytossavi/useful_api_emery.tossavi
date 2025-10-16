@@ -15,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
         //
         $middleware->alias([
             'CheckModuleActive' => \App\Http\Middleware\CheckModuleActive::class,
+            'auth_api' => \App\Http\Middleware\CustomAuthMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

@@ -17,22 +17,6 @@ class ModuleController extends Controller
         return response()->json($data);
     }
 
-    public function activateModule($moduleId)
-    {
-        try {
-
-            
-
-        } catch (\Throwable $th) {
-            return response()->json(
-                [
-                    "error" => $message ?? $th->getMessage(),
-                ],
-                403,
-            );
-        }
-    }
-
     /**
      * Show the form for creating a new resource.
      */

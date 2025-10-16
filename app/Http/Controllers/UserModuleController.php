@@ -7,6 +7,142 @@ use Illuminate\Http\Request;
 
 class UserModuleController extends Controller
 {
+
+    public function activateModule(Request $request, $id)
+    {
+        try {
+
+            /* $request->validate(
+                ['id' => "required|exists:modules,id"],
+                [
+                    "id.required" => "Module required",
+                    "id.exists" => "This Module does'n exists",
+                ]
+            ); */
+
+            if (Auth('sanctum')->user() == null) {
+                return response()->json(
+                    [
+                        "error" => "Login first !!!"
+                    ],
+                    403
+                );
+            }
+
+            if (Auth('sanctum')->user() == null) {
+                return response()->json(
+                    [
+                        "error" => "Login first !!!"
+                    ],
+                    403
+                );
+            }
+
+            $module = UserModule::where('module_id', $id)
+                    ->where("user_id", Auth('sanctum')->user()->id)
+                    ->first();
+
+            $isModuleActive = $module->active ?? false;
+
+
+            if($isModuleActive == false){
+
+                $userModule = UserModule::updateOrCreate([
+                    "user_id" => Auth('sanctum')->user()->id,
+                    "module_id" => $id,
+                ]);
+
+                $userModule->setAttribute("active", true);
+                $userModule->save();
+
+                return response()->json(
+                    [
+                        "message" => "Module activated",
+                    ],
+                    200
+                );
+            }else{
+                return response()->json(
+                    ["message" => "Already activated"],
+                    401
+                );
+            }
+
+
+        } catch (\Throwable $th) {
+            return response()->json(
+                [
+                    "error" => $message ?? $th->getMessage(),
+                ],
+                403,
+            );
+        }
+    }
+
+
+    public function deActivateModule(Request $request, $id)
+    {
+        try {
+
+            /* $request->validate(
+                ['id' => "required|exists:modules,id"],
+                [
+                    "id.required" => "Module required",
+                    "id.exists" => "This Module does'n exists",
+                ]
+            ); */
+
+            if (Auth('sanctum')->user() == null) {
+                return response()->json(
+                    [
+                        "error" => "Login first !!!"
+                    ],
+                    403
+                );
+            }
+
+            $module = UserModule::where('module_id', $id)
+                    ->where("user_id", Auth('sanctum')->user()->id)
+                    ->first();
+
+            $isModuleActive = $module->active ?? true;
+
+
+            if($isModuleActive == true){
+                /* $module->setAttribute('active', true);
+                $module->save(); */
+                $userModule = UserModule::updateOrCreate([
+                    "user_id" => Auth('sanctum')->user()->id,
+                    "module_id" => $id,
+                ]);
+
+                $userModule->setAttribute("active", false);
+                $userModule->save();
+
+                return response()->json(
+                    [
+                        "message" => "Module deactivated",
+                    ],
+                    200
+                );
+            }else{
+                return response()->json(
+                    ["message" => "Already deactivated"],
+                    401
+                );
+            }
+
+
+        } catch (\Throwable $th) {
+            return response()->json(
+                [
+                    "error" => $message ?? $th->getMessage(),
+                ],
+                403,
+            );
+        }
+    }
+
     /**
      * Display a listing of the resource.
      */
