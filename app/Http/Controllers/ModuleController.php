@@ -13,6 +13,24 @@ class ModuleController extends Controller
     public function index()
     {
         //
+        $data = Module::get(["id", "name", "description"])->all();
+        return response()->json($data);
+    }
+
+    public function activateModule($moduleId)
+    {
+        try {
+
+            
+
+        } catch (\Throwable $th) {
+            return response()->json(
+                [
+                    "error" => $message ?? $th->getMessage(),
+                ],
+                403,
+            );
+        }
     }
 
     /**
