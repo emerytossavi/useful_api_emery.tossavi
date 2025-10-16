@@ -28,6 +28,7 @@ Route::middleware(['CheckModuleActive'])->prefix('modules/{id}')->group(function
 
     // URL
     Route::post("/shorten", [ShortLinkController::class, 'store'])->name("url.store");
+    Route::get("/s/{code}", [ShortLinkController::class, 'redirectTo'])->name("url.redirect");
 
 
 });

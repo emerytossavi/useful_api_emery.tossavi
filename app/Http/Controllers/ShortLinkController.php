@@ -65,6 +65,54 @@ class ShortLinkController extends Controller
                 ],
                 201
             );
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json(
+                [
+                    "error" => $th->getMessage(),
+                ],
+                403,
+            );
+        }
+    }
+
+    public function redirectTo($id, $code)
+    {
+        try {
+
+            $request = new Request;
+
+            // request only takes arrays
+            $code = ["code" => $code];
+
+            $request->merge($code);
+            $request->validate(
+                [
+                    "code" => "required|exists:short_links,code"
+                ],
+                [
+                    "code.required" => "Missing code",
+                    "code.exists" => "This code does'n exists",
+                ]
+            );
+
+            $data = ShortLink::where("code", $code)
+                ->where('user_id', Auth("sanctum")->user()->id)
+                ->first();
+
+            // dd($data);
+
+            if($data){
+                $data->setAttribute('clicks', $data->clicks += 1);
+                $data->save();
+
+                return redirect()->away($data->original_url);
+            }else{
+                return response()->json(
+                    ["message" => "Not found" ],
+                    401,
+                );
+            }
 
         } catch (\Throwable $th) {
             //throw $th;
