@@ -17,10 +17,10 @@ class UserModule extends Model
     ];
 
     public function User(){
-        return $this->belongsTo("user_id");
+        return $this->belongsTo(User::class, "user_id");
     }
 
     public function Module(){
-        return $this->belongsTo("module_id");
+        return $this->belongsTo(Module::class, "module_id");
     }
 }
