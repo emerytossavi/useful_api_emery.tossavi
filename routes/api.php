@@ -29,6 +29,7 @@ Route::middleware(['CheckModuleActive'])->prefix('modules/{id}')->group(function
     // URL
     Route::post("/shorten", [ShortLinkController::class, 'store'])->name("url.store");
     Route::get("/s/{code}", [ShortLinkController::class, 'redirectTo'])->name("url.redirect");
+    Route::get("/links", [ShortLinkController::class, 'links'])->name("url.links");
 
 
 });
@@ -42,5 +43,5 @@ Route::post("/login", [UserController::class, "login"])->name('user.login');
 ####
 
 Route::post("/shorten", function(Request $request) {
-    return redirect()->away(Route("url.store"));
+    return redirect()->route("url.store", ["request" => $request, "id" => 1]);
 });

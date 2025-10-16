@@ -125,6 +125,11 @@ class ShortLinkController extends Controller
         }
     }
 
+    public function links($id)
+    {
+        
+    }
+
     /**
      * Display the specified resource.
      */
