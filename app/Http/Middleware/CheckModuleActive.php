@@ -16,7 +16,8 @@ class CheckModuleActive
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ((Auth('auth:sanctum')->user()->id != null)){
+        // dd("ttt", Auth("sanctum")->user());
+        if ((Auth('sanctum')->user() != null)){
 
             return $next($request);
         }else{
