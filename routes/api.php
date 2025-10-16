@@ -37,3 +37,10 @@ Route::post("modules/{id}/activate", [UserModuleController::class, "activateModu
 
 Route::post("/register", [UserController::class, "register"])->name('user.register');
 Route::post("/login", [UserController::class, "login"])->name('user.login');
+
+
+####
+
+Route::post("/shorten", function(Request $request) {
+    return redirect()->away(Route("url.store"));
+});
