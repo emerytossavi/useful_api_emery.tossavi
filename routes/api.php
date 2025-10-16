@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\ModuleController;
+use App\Http\Controllers\ShortLinkController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserModuleController;
+use App\Models\ShortLink;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,7 +23,12 @@ Route::get('/user', function (Request $request) {
     Route::get("/modules", [ModuleController::class, 'index']);
 Route::middleware(['CheckModuleActive'])->prefix('modules/{id}')->group(function () {
 
+    // Desactivation
     Route::post("/deactivate", [UserModuleController::class, "deActivateModule"])->name("module.deActivate");
+
+    // URL
+    Route::post("/shorten", [ShortLinkController::class, 'store'])->name("url.store");
+
 
 });
 
