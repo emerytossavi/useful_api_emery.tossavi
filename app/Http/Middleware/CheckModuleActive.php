@@ -16,14 +16,22 @@ class CheckModuleActive
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next, $activeModuleId): Response
     {
 
+        // dd("yp");
         try {
+
+            // $request->activeModuleId = $request->activeModuleId ?? $id;
+            if (!$request->activeModuleId){
+                $activeModuleId = ["activeModuleId" => $activeModuleId];
+                $request->merge($activeModuleId);
+            }
+
 
             if ((Auth('sanctum')->user() != null)) {
 
-                $currentModule = $request->id;
+                $currentModule = $request->activeModuleId;
 
                 if ($currentModule == null) {
                     return response()->json(
@@ -36,14 +44,13 @@ class CheckModuleActive
 
 
                 $isModuleActive = UserModule::where('module_id', $currentModule)
-                    ->where("user_id", Auth('sanctum')->user()->id)
-                    ->first();
+                ->where("user_id", Auth('sanctum')->user()->id)
+                ->first();
 
                 $isModuleActive = $isModuleActive->active ?? false;
 
 
                 if ($isModuleActive) {
-                    
                     return $next($request);
                 } else {
                     return response()->json(
