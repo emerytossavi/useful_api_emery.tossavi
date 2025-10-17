@@ -33,8 +33,8 @@
 import { ref } from 'vue';
 import { useAuthStore } from '@/stores/auth';
 
-const email = ref('emerytossavi+001@gmail.com');
-const password = ref('Azerty_12');
+const email = ref('');
+const password = ref('');
 
 const auth = useAuthStore();
 

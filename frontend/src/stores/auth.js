@@ -83,6 +83,27 @@ export const useAuthStore = defineStore('auth', {
 
     },
 
+    async register(user) {
+      console.log(user);
+      // console.log(this.requester);
+
+      const response = await handleApiCall(() => axiosInst.post(`/register`, user));
+
+      // const response = await axiosInst.post(`/login`, user);
+
+      console.log(response);
+
+      /* this.token = response.token;
+      this.user_id = response.user_id;
+
+      console.log(this.token)
+      console.log(this.user_id) */
+
+      /* localStorage.setItem('user.token', this.token)
+      localStorage.setItem('user.user_id', this.user_id) */
+
+    },
+
 
 
 
