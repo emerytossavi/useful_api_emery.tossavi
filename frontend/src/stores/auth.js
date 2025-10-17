@@ -57,6 +57,8 @@ export const useAuthStore = defineStore('auth', {
     // doubleCount: (state) => state.count * 2,
   },
 
+  persist: true,
+
 
   actions: {
 
