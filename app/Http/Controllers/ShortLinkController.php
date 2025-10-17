@@ -27,7 +27,7 @@ class ShortLinkController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, $id)
+    public function store(Request $request)
     {
         //
         try {
@@ -76,7 +76,7 @@ class ShortLinkController extends Controller
         }
     }
 
-    public function redirectTo($id, $code)
+    public function redirectTo($code)
     {
         try {
 
@@ -125,9 +125,9 @@ class ShortLinkController extends Controller
         }
     }
 
-    public function links($id)
+    public function links()
     {
-        
+
     }
 
     /**
